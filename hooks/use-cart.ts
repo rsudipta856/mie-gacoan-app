@@ -15,11 +15,19 @@ export function useCart() {
           const savedCart = localStorage.getItem("mie-gacoan-cart")
           if (savedCart) {
             const parsedCart: CartItem[] = JSON.parse(savedCart)
-            setCartItems(parsedCart)
+            // Filter out old menu items that don't exist anymore
+            const validCart = parsedCart.filter(
+              (item) => item.id && item.name && item.price && typeof item.quantity === "number",
+            )
+            setCartItems(validCart)
           }
         }
       } catch (error) {
         console.error("Error loading cart:", error)
+        // Clear corrupted cart data
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("mie-gacoan-cart")
+        }
       } finally {
         setIsLoaded(true)
       }

@@ -14,9 +14,10 @@ import { SetupNotice } from "@/components/setup-notice"
 export default function Home() {
   const { menuItems, loading } = useSupabaseMenu()
   const { settings: storeSettings } = useStoreSettings()
-  const { cartItems, addToCart, updateQuantity, getTotalItems, getTotalPrice, isLoaded } = useCart()
+  const { cartItems, addToCart, updateQuantity, removeFromCart, clearCart, getTotalItems, getTotalPrice, isLoaded } =
+    useCart()
 
-  const [selectedCategory, setSelectedCategory] = useState("MIE TAKE AWAY")
+  const [selectedCategory, setSelectedCategory] = useState("MIE")
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<"menu" | "order" | "payment">("menu")
 
@@ -32,7 +33,9 @@ export default function Home() {
   }, [menuItems, selectedCategory])
 
   const handleCheckout = () => {
-    setCurrentPage("order")
+    if (getTotalItems() > 0) {
+      setCurrentPage("order")
+    }
   }
 
   const handleProceedToPayment = () => {
@@ -82,10 +85,12 @@ export default function Home() {
       <OrderSummary
         cartItems={cartItems}
         onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeFromCart}
         totalPrice={getTotalPrice()}
         onBack={handleBackToMenu}
         onProceedToPayment={handleProceedToPayment}
         menuItems={menuItems}
+        onClearCart={clearCart}
       />
     )
   }
@@ -163,7 +168,7 @@ export default function Home() {
               <span className="bg-pink-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
                 {getTotalItems()}
               </span>
-              <span className="font-semibold">Total</span>
+              <span className="font-semibold">Total: {`Rp${getTotalPrice().toLocaleString("id-ID")}`}</span>
             </div>
             <button
               onClick={handleCheckout}

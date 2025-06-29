@@ -15,7 +15,6 @@ export function PaymentPage({ onBack, totalAmount }: PaymentPageProps) {
     phoneNumber: "",
     email: "",
   })
-  const [paymentMethod, setPaymentMethod] = useState<"online" | "cashier">("online")
 
   const formatPrice = (price: number) => {
     return `Rp${price.toLocaleString("id-ID")}`
@@ -104,40 +103,11 @@ export function PaymentPage({ onBack, totalAmount }: PaymentPageProps) {
             </div>
           </div>
 
-          {/* Payment Method */}
+          {/* Payment Method - Only QRIS */}
           <div className="bg-white rounded-lg p-4 mb-6 shadow-sm">
             <h3 className="font-semibold mb-4">Payment Method</h3>
 
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("online")}
-                className={`p-3 rounded-lg border-2 flex items-center gap-2 ${
-                  paymentMethod === "online" ? "border-pink-600 bg-pink-50" : "border-gray-200 bg-white"
-                }`}
-              >
-                <span className="text-2xl">💳</span>
-                <span className="text-sm font-medium">Online Payment</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("cashier")}
-                className={`p-3 rounded-lg border-2 flex items-center gap-2 ${
-                  paymentMethod === "cashier" ? "border-pink-600 bg-pink-50" : "border-gray-200 bg-white"
-                }`}
-              >
-                <span className="text-2xl">🏪</span>
-                <span className="text-sm font-medium">Pay at Cashier</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Complete Payment */}
-          <div className="bg-white rounded-lg p-4 mb-6 shadow-sm">
-            <h3 className="font-semibold mb-4">Complete Payment</h3>
-
-            <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+            <div className="p-3 border-2 border-pink-600 bg-pink-50 rounded-lg flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
                   <span className="text-white text-xs font-bold">QR</span>
@@ -148,22 +118,11 @@ export function PaymentPage({ onBack, totalAmount }: PaymentPageProps) {
             </div>
           </div>
 
-          {/* Add Promos */}
-          <div className="bg-white rounded-lg p-4 mb-6 shadow-sm">
-            <button type="button" className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-3">
-                <span className="text-pink-600 text-xl">🎁</span>
-                <span className="text-pink-600 font-medium">Add Promos or Vouchers</span>
-              </div>
-              <span className="text-gray-400">→</span>
-            </button>
-          </div>
-
           {/* Payment Total */}
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm text-gray-600">Payment Total ▲</p>
+                <p className="text-sm text-gray-600">Payment Total</p>
                 <p className="text-xl font-bold">{formatPrice(totalAmount + 1000)}</p>
               </div>
               <button
