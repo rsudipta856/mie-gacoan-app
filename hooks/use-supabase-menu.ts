@@ -10,7 +10,7 @@ const COMPLETE_MENU_ITEMS: MenuItem[] = [
     id: "mie-1",
     name: "MIE SUIT",
     price: 10500,
-    image_url: "/images/mie-gacoan-level-1.png",
+    image_url: "/images/food-menu.png",
     category: "MIE",
     is_available: true,
     description: "Mie dengan bumbu khas Mie Gacoan yang lezat",
